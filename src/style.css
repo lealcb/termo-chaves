@@ -57,6 +57,9 @@ label i { margin-left: 5px; color: #9d97a6; font-size: 11px; font-style: normal;
 input, textarea { width: 100%; border: 1.5px solid #e1dce8; border-radius: 11px; outline: none; padding: 12px 13px; color: var(--ink); background: #fcfbfd; font-size: 14px; transition: .18s ease; }
 input:focus, textarea:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px rgba(98,68,212,.1); }
 input::placeholder, textarea::placeholder { color: #aaa4b3; font-weight: 400; }
+.document-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 12px; }
+.document-toggle input { width: 18px; height: 18px; margin: 0; padding: 0; accent-color: var(--accent); flex-shrink: 0; }
+input:disabled { background: #f0edf4; color: #8b8495; cursor: not-allowed; }
 textarea { resize: vertical; min-height: 74px; }
 
 .generate-button { width: 100%; margin-top: 32px; padding: 15px 20px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 0; border-radius: 13px; cursor: pointer; color: #fff; background: linear-gradient(135deg, #6c4cdb, #5134bc); box-shadow: 0 13px 28px rgba(89, 59, 195, .24); font-weight: 800; transition: transform .18s ease, box-shadow .18s ease; }

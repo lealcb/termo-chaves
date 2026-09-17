@@ -4,6 +4,7 @@ import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { omitUncheckedDocuments } from "./optional-documents.js";
 
 const form = document.querySelector("#termo-form");
 const button = document.querySelector("#generate-button");
@@ -38,6 +39,10 @@ function formatCpf(value) {
 
 function getValues() {
   const values = Object.fromEntries(new FormData(form).entries());
+  for (const field of ["rg", "cpf"]) {
+    values[`incluir_${field}`] = document.querySelector(`#incluir-${field}`).checked;
+    if (!values[`incluir_${field}`]) values[field] = "";
+  }
   values.data = dateForDocument(values.data);
   values.inquilino = values.inquilino.trim().toUpperCase();
   values.chaves = values.chaves.trim().toUpperCase();
@@ -65,8 +70,8 @@ function updatePreview() {
   const pieces = [
     ["No dia ", false], [d.data, false], [" ", false],
     [textOr(d.inquilino, "NOME DO INQUILINO"), true],
-    [" RG ", false], [textOr(d.rg, "RG"), false],
-    [" CPF ", false], [textOr(d.cpf, "CPF"), true],
+    ...(d.incluir_rg ? [[" RG ", false], [textOr(d.rg, "RG"), false]] : []),
+    ...(d.incluir_cpf ? [[" CPF ", false], [textOr(d.cpf, "CPF"), true]] : []),
     [" retirou as chaves conjunto com ", false],
     [textOr(d.chaves, "CHAVES ENTREGUES"), true],
     [", do imóvel situado em ", false],
@@ -116,6 +121,7 @@ async function createDocx(data) {
   if (!response.ok) throw new Error("O modelo DOCX não foi encontrado.");
   const template = await response.arrayBuffer();
   const zip = new PizZip(template);
+  zip.file("word/document.xml", omitUncheckedDocuments(zip.file("word/document.xml").asText(), data));
   const document = new Docxtemplater(zip, {
     paragraphLoop: true,
     linebreaks: true,
@@ -169,7 +175,20 @@ function showToast(message) {
   window.setTimeout(() => toast.classList.remove("visible"), 3600);
 }
 
-form.addEventListener("input", updatePreview);
+function syncDocumentFields() {
+  for (const field of ["rg", "cpf"]) {
+    const checked = document.querySelector(`#incluir-${field}`).checked;
+    const input = document.querySelector(`#${field}`);
+    input.required = checked;
+    input.disabled = !checked;
+    document.querySelector(`#${field}-required`).hidden = !checked;
+  }
+}
+
+form.addEventListener("input", () => {
+  syncDocumentFields();
+  updatePreview();
+});
 document.querySelector("#cpf").addEventListener("input", (event) => {
   event.target.value = formatCpf(event.target.value);
 });
@@ -208,5 +227,6 @@ form.addEventListener("submit", async (event) => {
 
 document.querySelector("#data").value = new Date().toISOString().slice(0, 10);
 new ResizeObserver(resizePreview).observe(paperStage);
+syncDocumentFields();
 updatePreview();
 resizePreview();
