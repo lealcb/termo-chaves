@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#5638c5" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content="Gerador de termo de entrega de chaves" />
+    <title>Termo de Entrega de Chaves</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">G</div>
+          <div>
+            <p class="eyebrow">CASAS COMIGO</p>
+            <h1>Termo de entrega de chaves</h1>
+          </div>
+        </div>
+        <div class="privacy-pill" title="As informações não são enviadas para nenhum servidor">
+          <span class="privacy-icon" aria-hidden="true">✓</span>
+          Dados ficam neste dispositivo
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="form-panel" aria-labelledby="form-title">
+          <div class="panel-heading">
+            <div>
+              <p class="kicker">NOVO DOCUMENTO</p>
+              <h2 id="form-title">Preencha os dados</h2>
+            </div>
+            <p class="required-note"><span>*</span> Obrigatório</p>
+          </div>
+
+          <form id="termo-form" novalidate>
+            <fieldset>
+              <legend><span>01</span> Entrega</legend>
+              <div class="form-grid">
+                <div class="field field-date">
+                  <label for="data">Data <b>*</b></label>
+                  <input id="data" name="data" type="date" required />
+                </div>
+                <div class="field field-grow">
+                  <label for="inquilino">Nome do inquilino <b>*</b></label>
+                  <input id="inquilino" name="inquilino" type="text" placeholder="Nome completo" autocomplete="name" required />
+                </div>
+                <div class="field">
+                  <label for="rg">RG <b>*</b></label>
+                  <input id="rg" name="rg" type="text" placeholder="00.000.000-0" required />
+                </div>
+                <div class="field">
+                  <label for="cpf">CPF <b>*</b></label>
+                  <input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required />
+                </div>
+                <div class="field field-full">
+                  <label for="chaves">Chaves entregues <b>*</b></label>
+                  <textarea id="chaves" name="chaves" rows="2" placeholder="Ex.: três chaves" required></textarea>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend><span>02</span> Imóvel e proprietário</legend>
+              <div class="form-grid">
+                <div class="field field-full">
+                  <label for="endereco_imovel">Endereço completo do imóvel <b>*</b></label>
+                  <input id="endereco_imovel" name="endereco_imovel" type="text" placeholder="Rua, número, bairro, cidade e estado" required />
+                </div>
+                <div class="field">
+                  <label for="proprietario">Proprietário <b>*</b></label>
+                  <input id="proprietario" name="proprietario" type="text" placeholder="Nome ou razão social" required />
+                </div>
+                <div class="field">
+                  <label for="cpf_cnpj">Qualificação ou CPF/CNPJ <b>*</b></label>
+                  <input id="cpf_cnpj" name="cpf_cnpj" type="text" placeholder="CPF, CNPJ ou qualificação completa" required />
+                </div>
+                <div class="field field-full">
+                  <label for="endereco_proprietario">Endereço do proprietário <b>*</b></label>
+                  <input id="endereco_proprietario" name="endereco_proprietario" type="text" placeholder="Rua, número, bairro, cidade e estado" required />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend><span>03</span> Complementos <em>opcional</em></legend>
+              <div class="form-grid">
+                <div class="field field-full">
+                  <label for="socios">Sócios <i>opcional</i></label>
+                  <input id="socios" name="socios" type="text" placeholder="Deixe em branco quando não houver" />
+                </div>
+                <div class="field field-full">
+                  <label for="mais_info">Mais informações <i>opcional</i></label>
+                  <textarea id="mais_info" name="mais_info" rows="3" placeholder="Observações adicionais para o termo"></textarea>
+                </div>
+              </div>
+            </fieldset>
+
+            <div id="form-error" class="form-error" role="alert" hidden></div>
+
+            <button class="generate-button" id="generate-button" type="submit">
+              <span class="download-symbol" aria-hidden="true">↓</span>
+              <span class="button-text">Baixar DOCX e PDF</span>
+            </button>
+            <p class="button-help">O download contém os dois documentos em um arquivo ZIP.</p>
+          </form>
+        </section>
+
+        <aside class="preview-panel" aria-label="Pré-visualização do termo">
+          <div class="preview-heading">
+            <div>
+              <p class="kicker">PRÉ-VISUALIZAÇÃO</p>
+              <h2>Documento</h2>
+            </div>
+            <span class="live-badge"><span></span> Ao vivo</span>
+          </div>
+          <div class="paper-stage" id="paper-stage">
+            <article class="document-preview" id="document-preview">
+              <header class="document-header">
+                <img src="./assets/image1.png" alt="Imobiliária Casas Comigo" />
+                <div class="company-data">
+                  <strong>IMOBILIÁRIA CASAS COMIGO LTDA</strong>
+                  <strong>CNPJ: 41.585.450/0001-70</strong>
+                  <b>CRECI: 037918-J</b>
+                </div>
+              </header>
+              <div class="document-rule"></div>
+              <h3>TERMO DE ENTREGA DE CHAVES</h3>
+              <p class="document-body" id="preview-body"></p>
+              <p class="document-date">Atibaia, <span data-preview="data">DATA</span></p>
+              <div class="signature">
+                <div></div>
+                <strong data-preview="inquilino">NOME DO INQUILINO</strong>
+              </div>
+              <footer class="document-footer">
+                <div></div>
+                <strong>Av. Presidente Vargas, 1566 – Jardim das Cerejeiras – Atibaia – SP – CEP 12951-000</strong>
+                <strong>Tel. 11 4260-1255 – email: <u>contato@imobiliariacasascomigo.com.br</u></strong>
+              </footer>
+            </article>
+          </div>
+        </aside>
+      </main>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
