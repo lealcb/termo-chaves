@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#5638c5" />
+    <meta name="theme-color" content="#ee6837" />
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta name="description" content="Gerador de termo de entrega de chaves" />
     <title>Termo de Entrega de Chaves</title>
@@ -12,11 +12,8 @@
     <div id="app">
       <header class="topbar">
         <div class="brand">
-          <div class="brand-mark" aria-hidden="true">G</div>
-          <div>
-            <p class="eyebrow">CASAS COMIGO</p>
-            <h1>Termo de entrega de chaves</h1>
-          </div>
+          <img class="brand-logo" src="./assets/image1.png" alt="Casas Comigo Imobiliária" />
+          <h1>Termo de chaves</h1>
         </div>
         <div class="privacy-pill" title="As informações não são enviadas para nenhum servidor">
           <span class="privacy-icon" aria-hidden="true">✓</span>
@@ -36,7 +33,7 @@
 
           <form id="termo-form" novalidate>
             <fieldset>
-              <legend><span>01</span> Entrega</legend>
+              <legend><span>01</span> Dados do termo</legend>
               <div class="form-grid">
                 <div class="field field-date">
                   <label for="data">Data <b>*</b></label>
@@ -57,7 +54,11 @@
                   <input id="cpf" name="cpf" type="text" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" required />
                 </div>
                 <div class="field field-full">
-                  <label for="chaves">Chaves entregues <b>*</b></label>
+                  <div class="segmented" role="radiogroup" aria-label="Tipo de termo">
+                    <label><input type="radio" name="tipo" value="entrega" checked /><span>Entrega</span></label>
+                    <label><input type="radio" name="tipo" value="devolucao" /><span>Devolução</span></label>
+                  </div>
+                  <label for="chaves">Chaves <span id="chaves-tipo">entregues</span> <b>*</b></label>
                   <textarea id="chaves" name="chaves" rows="2" placeholder="Ex.: três chaves" required></textarea>
                 </div>
               </div>
@@ -128,7 +129,7 @@
                 </div>
               </header>
               <div class="document-rule"></div>
-              <h3>TERMO DE ENTREGA DE CHAVES</h3>
+              <h3 id="preview-title">TERMO DE ENTREGA DE CHAVES</h3>
               <p class="document-body" id="preview-body"></p>
               <p class="document-date">Atibaia, <span data-preview="data">DATA</span></p>
               <div class="signature">

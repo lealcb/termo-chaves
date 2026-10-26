@@ -49,6 +49,10 @@ function getValues() {
   for (const [key, value] of Object.entries(values)) {
     values[key] = typeof value === "string" ? value.trim() : value;
   }
+  const devolucao = values.tipo === "devolucao";
+  values.titulo = devolucao ? "TERMO DE DEVOLUÇÃO DE CHAVES" : "TERMO DE ENTREGA DE CHAVES";
+  values.acao = devolucao ? "devolveu" : "retirou";
+  values.chaves_rotulo = devolucao ? "devolvidas" : "entregues";
   return values;
 }
 
@@ -64,6 +68,7 @@ function updatePreview() {
   document.querySelectorAll('[data-preview="inquilino"]').forEach((node) => {
     node.textContent = textOr(d.inquilino, "NOME DO INQUILINO");
   });
+  document.querySelector("#preview-title").textContent = d.titulo;
 
   const body = document.querySelector("#preview-body");
   body.replaceChildren();
@@ -72,8 +77,8 @@ function updatePreview() {
     [textOr(d.inquilino, "NOME DO INQUILINO"), true],
     ...(d.incluir_rg ? [[" RG ", false], [textOr(d.rg, "RG"), false]] : []),
     ...(d.incluir_cpf ? [[" CPF ", false], [textOr(d.cpf, "CPF"), true]] : []),
-    [" retirou as chaves conjunto com ", false],
-    [textOr(d.chaves, "CHAVES ENTREGUES"), true],
+    [` ${d.acao} as chaves conjunto com `, false],
+    [textOr(d.chaves, `CHAVES ${d.chaves_rotulo.toUpperCase()}`), true],
     [", do imóvel situado em ", false],
     [textOr(d.endereco_imovel, "ENDEREÇO DO IMÓVEL"), false],
     [", em locação firmada entre PROPRIETÁRIOS ", false],
@@ -185,8 +190,13 @@ function syncDocumentFields() {
   }
 }
 
+function syncTipo() {
+  document.querySelector("#chaves-tipo").textContent = form.elements.tipo.value === "devolucao" ? "devolvidas" : "entregues";
+}
+
 form.addEventListener("input", () => {
   syncDocumentFields();
+  syncTipo();
   updatePreview();
 });
 document.querySelector("#cpf").addEventListener("input", (event) => {
@@ -204,7 +214,8 @@ form.addEventListener("submit", async (event) => {
   }
 
   const data = getValues();
-  const baseName = safeFilename(`TERMO ENTREGA DE CHAVES ${data.data} ${data.inquilino}`);
+  const tipoArquivo = data.tipo === "devolucao" ? "DEVOLUCAO" : "ENTREGA";
+  const baseName = safeFilename(`TERMO ${tipoArquivo} DE CHAVES ${data.data} ${data.inquilino}`);
   button.disabled = true;
   button.querySelector(".button-text").textContent = "Preparando documentos...";
 
@@ -228,5 +239,6 @@ form.addEventListener("submit", async (event) => {
 document.querySelector("#data").value = new Date().toISOString().slice(0, 10);
 new ResizeObserver(resizePreview).observe(paperStage);
 syncDocumentFields();
+syncTipo();
 updatePreview();
 resizePreview();
