@@ -77,7 +77,7 @@ function updatePreview() {
     [textOr(d.inquilino, "NOME DO INQUILINO"), true],
     ...(d.incluir_rg ? [[" RG ", false], [textOr(d.rg, "RG"), false]] : []),
     ...(d.incluir_cpf ? [[" CPF ", false], [textOr(d.cpf, "CPF"), true]] : []),
-    [` ${d.acao} as chaves conjunto com `, false],
+    [` ${d.acao} o conjunto de chaves contendo `, false],
     [textOr(d.chaves, `CHAVES ${d.chaves_rotulo.toUpperCase()}`), true],
     [", do imóvel situado em ", false],
     [textOr(d.endereco_imovel, "ENDEREÇO DO IMÓVEL"), false],

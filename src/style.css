@@ -98,7 +98,7 @@ textarea { resize: vertical; min-height: 74px; }
 .document-date { margin: 38px 0 0; text-align: center; font-size: 19px; }
 .signature { width: 410px; margin: 118px auto 0; }
 .signature div { border-top: 1.5px solid #111; }
-.signature strong { display: block; margin: 7px 0 0 32px; font-size: 18px; }
+.signature strong { display: block; margin: 7px 0 0; text-align: center; font-size: 18px; }
 .document-footer { position: absolute; right: 57px; bottom: 40px; left: 57px; display: flex; flex-direction: column; text-align: center; font-size: 13px; line-height: 1.35; }
 .document-footer div { margin-bottom: 5px; border-top: 3px solid #111; }
 .document-footer u { color: #0875d1; }
